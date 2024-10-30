@@ -3,7 +3,7 @@
 // import viteLogo from '/vite.svg'
 import './App.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LoginForm from './components/loginForm/loginForm'
+import LoginForm from './components/loginForm/LoginForm'
 import RegisterForm from './components/registerForm/registerForm'
 
 function App() {
