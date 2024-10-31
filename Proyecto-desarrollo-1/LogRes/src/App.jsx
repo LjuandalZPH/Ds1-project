@@ -4,19 +4,13 @@
 import './App.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginForm from './components/loginForm/LoginForm'
-import RegisterForm from './components/registerForm/registerForm'
+import RegisterForm from './components/registerForm/RegisterForm'
 
 function App() {
   //const [count, setCount] = useState(0)
 
   return (
     <>
-      {/* <div>
-        <LoginForm/>
-      </div> */}
-      {/* <div>
-        <RegisterForm/>
-      </div> */}
       <Router>
         <Routes>
           <Route path="/" element={<LoginForm />} />

@@ -4,46 +4,44 @@ import { useForm } from "react-hook-form";
 
 const RegisterForm = () => {
     
-    const { register, formState: {errors} , handleSubmit } = useForm();
+    const { register, formState: {errors} , handleSubmit } = useForm({
+        // defaultValues: {
+        //     direccion: 'NA',
+        //     telefono: 'NA'
+        // }
+    });
 
     const onSubmit = (data) => {
         console.log(data);
     }
     
-    return <div>
-        <h2>Registro</h2>
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
-                <label>Nombre</label>
-                <input type="text" {...register('nombre', {
+    return <div id="main">
+        <form id="form" onSubmit={handleSubmit(onSubmit)}>
+            <h1>Registro</h1>
+            <div id="input-box">
+                <input type="text" placeholder="Nombre" {...register('nombre', {
                     required: true,
                     maxLength: 20
                 })} />
-                {errors.nombre?.type === 'required' && <p>El campo es requerido</p>}
+                {/* {errors.nombre?.type === 'required' && <p id="alert1">El campo es requerido</p>} */}
             </div>
-            <div>
-                <label>Dirección</label>
-                <input type="text" {...register('direccion')}/>
+            <div id="input-box">
+                <input type="text" placeholder="Direccion" {...register('direccion')}/>
             </div>
-            <div>
-                <label>Telefono</label>
-                <input type="text" {...register('telefono', {
+            <div id="input-box">
+                <input type="text" placeholder="Telefono" {...register('telefono')} />
+            </div>
+            <div id="input-box">
+                <input type="text" placeholder="Correo" {...register('correo', {
                     required: true
                 })} />
             </div>
-            <div>
-                <label>Correo</label>
-                <input type="text" {...register('correo', {
+            <div id="input-box">
+                <input type="password" placeholder="Contraseña" {...register('contrasena', {
                     required: true
                 })} />
             </div>
-            <div>
-                <label>Contraseña</label>
-                <input type="password" {...register('contrasena', {
-                    required: true
-                })} />
-            </div>
-            <div>
+            <div id="input-box">
                 <label>Pais</label>
                 <select {...register('pais', {
                     required: true
@@ -54,8 +52,14 @@ const RegisterForm = () => {
                     <option value="ge">Germany</option>
                 </select>
             </div>
-            <input type="submit" value="Send" />
+
+            <button id="button" type="submit">Send</button>
         </form>
+        <div id="presentation">
+            <div>
+                <p>Bienvenido a Unizone!!</p>
+            </div>
+        </div>
     </div>
 }
 
