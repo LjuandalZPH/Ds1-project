@@ -3,8 +3,8 @@
 // import viteLogo from '/vite.svg'
 import './App.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LoginForm from './components/loginForm/LoginForm'
-import RegisterForm from './components/registerForm/RegisterForm'
+import LoginForm from './components/loginForm/LoginForm';
+import RegisterForm from './components/registerForm/RegisterForm';
 
 function App() {
   //const [count, setCount] = useState(0)
