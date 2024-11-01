@@ -18,30 +18,30 @@ const RegisterForm = () => {
     return <div id="main">
         <form id="form" onSubmit={handleSubmit(onSubmit)}>
             <h1>Registro</h1>
-            <div id="input-box">
+            <div id="rinput-box">
                 <input type="text" placeholder="Nombre" {...register('nombre', {
                     required: true,
                     maxLength: 20
                 })} />
                 {/* {errors.nombre?.type === 'required' && <p id="alert1">El campo es requerido</p>} */}
             </div>
-            <div id="input-box">
+            <div id="rinput-box">
                 <input type="text" placeholder="Direccion" {...register('direccion')}/>
             </div>
-            <div id="input-box">
+            <div id="rinput-box">
                 <input type="text" placeholder="Telefono" {...register('telefono')} />
             </div>
-            <div id="input-box">
+            <div id="rinput-box">
                 <input type="text" placeholder="Correo" {...register('correo', {
                     required: true
                 })} />
             </div>
-            <div id="input-box">
+            <div id="rinput-box">
                 <input type="password" placeholder="Contraseña" {...register('contrasena', {
                     required: true
                 })} />
             </div>
-            <div id="input-box">
+            <div id="rinput-box">
                 <label>Pais</label>
                 <select {...register('pais', {
                     required: true
