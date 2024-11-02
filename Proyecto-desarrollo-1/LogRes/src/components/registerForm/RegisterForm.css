@@ -1,5 +1,5 @@
 #rbody {
-    background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+    background: linear-gradient(to right, #0D0D0D, #4E4AD9);
     font-family: 'Poppins', sans-serif;
     display: flex;
     align-items: center;
@@ -21,8 +21,8 @@
 #presentation {
     width: 40%;
     padding: 50px;
-    background-color: #23008d;
-    color: #fff;
+    background-color: #6C72D9;
+    color: #0D0D0D;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -34,7 +34,7 @@
 #rform {
     width: 60%;
     padding: 30px 40px;
-    color: #23008d;
+    color: #0D0D0D;
 }
 
 #rform h1 {
@@ -72,10 +72,27 @@
     border: 2px solid #ddd;
 }
 
+#login-link {
+    text-align: center; /* Centrar el enlace */
+    margin-top: 20px; /* Espaciado superior */
+}
+
+#already-have-account {
+    font-size: 14px; /* Tamaño de fuente */
+    color: #4E4AD9; /* Color que combine con tu diseño */
+    text-decoration: none; /* Quitar subrayado */
+    transition: color 0.3s; /* Transición para efecto hover */
+}
+
+#already-have-account:hover {
+    color: #3b0ca8; /* Color en hover */
+    text-decoration: underline; /* Subrayar en hover */
+}
+
 #button {
     width: 100%;
     height: 45px;
-    background: #23008d;
+    background: #4E4AD9;
     border: none;
     color: #fff;
     border-radius: 8px;
@@ -84,6 +101,7 @@
     margin-top: 20px;
     font-size: 16px;
     transition: background-color 0.3s;
+    text-transform: uppercase;
 }
 
 #button:hover {
