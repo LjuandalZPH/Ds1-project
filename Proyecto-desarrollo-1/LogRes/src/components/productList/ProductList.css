@@ -6,7 +6,7 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
   background-color: #000000;
 }
 
@@ -28,7 +28,7 @@ body {
 }
 .product {
   width: 200px; /* Puedes ajustar el valor según tus necesidades */
-  height: 350px; /* Puedes ajustar el valor según tus necesidades */
+  height: 370px; /* Puedes ajustar el valor según tus necesidades */
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
