@@ -43,7 +43,7 @@ const RegisterForm = () => {
                         </select>
                     </div>
                     <div id="login-link">
-                        <Link to="/" id="already-have-account">Already have an account?</Link>
+                        <Link to="/login" id="already-have-account">Already have an account?</Link>
                     </div>
                     <button id="button" type="submit">Send</button>
                 </form>
