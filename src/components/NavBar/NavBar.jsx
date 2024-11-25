@@ -1,49 +1,61 @@
-import Account from "./Account/Account";
-import Links from "./Links/Links";
-import Logo from "./Logo/Logo";
-import Search from "./Search/Search";
-import Hamburger from "hamburger-react";
-import "./NavBar.css";
+import React, { useState, useEffect } from 'react';
+import './NavBar.css';
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
-  const handleHamClick = () => {
-    let mobileExpandedMenu = document.querySelector(".mobile-expanded-menu");
-    mobileExpandedMenu.classList.toggle("mobile-expanded");
-  };
-  const removeExpandedClass = () => {
-    let mobileExpandedMenu = document.querySelector(".mobile-expanded-menu");
-    if (mobileExpandedMenu.classList.contains("mobile-expanded")) {
-      mobileExpandedMenu.classList.remove("mobile-expanded");
-      return true;
-    }
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    return false;
-  };
-  return (
-    <div className="sub-container nav-main">
-      <div className="nav-container">
-        <Logo></Logo>
-        <button type="button" className="hamburger">
-          <Hamburger
-            size={20}
-            color="#fff"
-            toggle={handleHamClick}
-            rounded
-          ></Hamburger>
-        </button>
-        <span className="desktop-links">
-          <Links></Links>
-        </span>
-        {/* <Search></Search> */}
-        <Account></Account>
-      </div>
-      <div className="nav-mobile">
-        <div className="mobile-expanded-menu">
-          <Links></Links>
-          <Account></Account>
-        </div>
-      </div>
-    </div>
-  );
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
+    useEffect(() => {
+        document.title = "Unizone";
+    }, []);
+
+    return (
+        <>
+            {/* Encabezado principal */}
+            <header className="main-nav">
+                <Link className="brand" to="/">UNIZONE</Link>
+                <button className="menu-button" onClick={toggleMenu}>Menú</button>
+                <div className="search-bar">
+                    <input type="text" placeholder="Buscar en unizone.com" />
+                    <button className="search-button">🔍</button>
+                </div>
+                <div className="nav-icons">
+                    <Link to="/login">👤 Mi cuenta</Link>
+                    <Link to="/cart">🛒 Carrito</Link>
+                </div>
+            </header>
+
+            {/* Menú desplegable */}
+            {isMenuOpen && (
+                <div className="dropdown-menu">
+                    <ul className="menu-list">
+                        <li><Link to="/">Inicio</Link></li>
+                        <li><Link to="/about">Acerca de</Link></li>
+                        <li>Productos
+                            <ul>
+                                <li><Link to="/lista-productos">Lista de productos</Link></li>
+                                <li><Link to="/detalle-producto">Detalles del producto</Link></li>
+                            </ul>
+                        </li>
+                        <li>Páginas
+                            <ul>
+                                <li><Link to="/login">Iniciar sesión</Link></li>
+                                <li><Link to="/checkout">Pagar</Link></li>
+                                <li><Link to="/cart">Carrito de compras</Link></li>
+                                <li><Link to="/confirmacion">Confirmación</Link></li>
+                                <li><Link to="/elementos">Elementos</Link></li>
+                            </ul>
+                        </li>
+                        <li><Link to="/contacto">Contacto</Link></li>
+                    </ul>
+                </div>
+            )}
+        </>
+    );
 };
+
 export default NavBar;

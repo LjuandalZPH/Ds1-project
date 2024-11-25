@@ -1,6 +1,7 @@
 import HomeView from "./views/HomeView";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavBar from "@/components/NavBar/NavBar";
+import LoginView from './views/LoginView';
 import ShopFooter from "@/components/Footer/ShopFooter";
 import ErrorView from "./views/ErrorView";
 import CartView from "./views/CartView";
@@ -29,6 +30,7 @@ function App() {
         </header>
         <Routes>
           <Route path="/" element={<HomeView />} />
+          <Route path="/login" element={<LoginView />} />
           <Route path="/cart" element={<CartView />} />
           <Route path="/delivery" element={<DeliveryView />} />
           <Route path="*" element={<ErrorView />} />

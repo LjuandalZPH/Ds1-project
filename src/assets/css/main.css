@@ -7,8 +7,8 @@
 
 .btn-rounded {
   border-radius: 50px;
-  background-color: #ffffff;
-  color: #fd8a15;
+  background-color: #e12e2e;
+  color: #000000;
   border: none;
   padding: 1rem 2rem;
   font-weight: 900;
@@ -25,14 +25,11 @@
 
 header,
 footer {
-  background-color: #ff8b15;
+  background-color: #ffffff;
+  
 }
 
-.hero-section {
-  background-color: #ff8b15;
-  padding: 1rem;
-  margin-bottom: 1rem;
-}
+
 
 .products-section {
   background-color: #f9f9f9;
@@ -41,9 +38,7 @@ footer {
 }
 
 footer {
-  margin-top: 2rem;
-  padding: 2rem;
-  color: white;
+  color: #000000;
 }
 
 ul {
