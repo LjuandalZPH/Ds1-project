@@ -6,16 +6,14 @@ import { toast } from "react-toastify";
 
 const Product = ({ product }) => {
   let {store} = useGlobalContext();
-  let stars = [];
-  for (let i = 0; i < product?.rating; i++) {
-    stars.push(<FaStar key={i} />);
-  }
+  
+ 
   const isInCart = product?.addedToCart;
   return (
     <div className="product-container">
       <div className="image">
         <img
-          src={product?.product_image || headphones_pink}
+          src={product.photo || headphones_pink}
           alt="Product Image"
           width={"100%"}
         />
@@ -25,15 +23,14 @@ const Product = ({ product }) => {
         <div className="price">
           <div className="name-price-product">
             <h4>{product?.name}</h4>
-            <h5>
-              $<span className="actual-product-price">{product?.price}.00</span>
-            </h5>
+            <h3>
+            <span className="actual-product-price"><>$&nbsp;</>
+            {new Intl.NumberFormat("es-ES", { style: "decimal", useGrouping: true }).format(Math.floor(product?.price))}
+            </span>
+
+            </h3>
           </div>
           <h5>{product?.description}</h5>
-          <div className="star-rating">
-            <div className="star">{stars}</div>
-            <span>({parseInt(Math.random() * 100)} Reviews)</span>
-          </div>
         </div>
         <div>
           {isInCart == false ? (
@@ -44,7 +41,11 @@ const Product = ({ product }) => {
                   toast.warning("You can only add 10 items to cart");
                   return;
                 }
-                store.addToCart(product?._id);
+                store.addToCart(product?.id);
+                toast.success("Producto Añadido al carrito", {
+                  autoClose: 350, // Tiempo de cierre automático en milisegundos
+                  hideProgressBar: true, // Muestra barra de progreso
+                });
               }}
             >
               Add to Cart
@@ -53,7 +54,11 @@ const Product = ({ product }) => {
             <button
               className="add-to-cart"
               onClick={() => {
-                store.removeFromCart(product?._id);
+                store.removeFromCart(product?.id);
+                toast.success("Producto Eliminado del carrito", {
+                  autoClose: 350, // Tiempo de cierre automático en milisegundos
+                  hideProgressBar: true, // Muestra barra de progreso
+                });
               }}
             >
               Remove from cart

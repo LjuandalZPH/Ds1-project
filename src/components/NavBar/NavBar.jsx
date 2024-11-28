@@ -1,14 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import './NavBar.css';
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate} from 'react-router-dom';
 
-const NavBar = () => {
+const NavBar = ({ onSearch }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
-
+    const [searchTerm, setSearchTerm] = useState("");
+    const handleSearch = () => {
+        if (!searchTerm.trim()) {
+            // Si el término está vacío, realiza alguna acción (opcional)
+            onSearch(""); // Envía una cadena vacía para indicar que no hay búsqueda
+            return;
+        }
+        onSearch(searchTerm); // Llama a la función proporcionada desde HomeView
+    };
+    
+    
+    // Función para manejar el evento de presionar 'Enter'
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
+    };
     useEffect(() => {
         document.title = "Unizone";
     }, []);
@@ -20,7 +36,13 @@ const NavBar = () => {
                 <Link className="brand" to="/">UNIZONE</Link>
                 <button className="menu-button" onClick={toggleMenu}>Menú</button>
                 <div className="search-bar">
-                    <input type="text" placeholder="Buscar en unizone.com" />
+                <input
+                        type="text"
+                        placeholder="Buscar en unizone.com"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onKeyDown={handleKeyDown}  // Escucha la tecla 'Enter'
+                    />
                     <button className="search-button">🔍</button>
                 </div>
                 <div className="nav-icons">

@@ -13,6 +13,7 @@ const GlobalContext = ({ children }) => {
   const auth = useAuth();
   const modal = useModal();
   const orders = useOrders();
+
   return (
     <globalContext.Provider value={{ store, auth, modal, orders }}>
       {children}
