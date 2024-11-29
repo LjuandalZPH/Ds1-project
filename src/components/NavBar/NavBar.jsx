@@ -16,9 +16,14 @@ const NavBar = ({ onSearch }) => {
             return;
         }
         onSearch(searchTerm); // Llama a la función proporcionada desde HomeView
+        scrollToProducts();
     };
-    
-    
+    const scrollToProducts = () => {
+        const productsSection = document.querySelector("#products");
+        if (productsSection) {
+            productsSection.scrollIntoView({ behavior: "smooth" });
+        }
+    };
     // Función para manejar el evento de presionar 'Enter'
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {

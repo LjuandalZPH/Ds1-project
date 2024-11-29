@@ -1,7 +1,7 @@
 import HomeView from "./views/HomeView";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavBar from "@/components/NavBar/NavBar";
-import Search from "@/components/NavBar/Search/Search";
+import Search from "@/components/NavBar/NoResults/NoResults";
 import LoginView from './views/LoginView';
 import ShopFooter from "@/components/Footer/ShopFooter";
 import ErrorView from "./views/ErrorView";
