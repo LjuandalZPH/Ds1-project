@@ -120,6 +120,12 @@ if (action.type == actions.REMOVE_FROM_CART) {
     newCartTotal += item.price * item.quantity;
   });
 
+  // Calcula la cantidad total de artículos
+  const newCartQuantity = newCart.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+
   // Retorna el nuevo estado con el carrito actualizado y los productos correctamente mapeados
   return {
     ...state,
@@ -127,8 +133,8 @@ if (action.type == actions.REMOVE_FROM_CART) {
       p.id === product.id ? updatedProduct : p // Usa 'id' en lugar de '_id'
     ),
     cart: newCart,
-    cartQuantity: state.cartQuantity - 1,
-    cartTotal: newCartTotal,
+    cartQuantity: newCartQuantity, // Se calcula correctamente la cantidad total de artículos
+    cartTotal: newCartTotal, // Se actualiza el total correctamente
   };
 }
   // add quantity
@@ -145,10 +151,15 @@ if (action.type == actions.REMOVE_FROM_CART) {
       (total, product) => total + product.price * product.quantity,
       0
     );
+    const newCartQuantity = updatedCart.reduce(
+      (total, product) => total + product.quantity, // Sumamos las cantidades de cada producto
+      0
+    );
   
     return {
       ...state,
       cart: updatedCart, // Actualizamos el carrito con el carrito modificado
+      cartQuantity: newCartQuantity,
       cartTotal: newCartTotal, // Usamos el nuevo total calculado
     };
   }
@@ -165,10 +176,14 @@ if (action.type == actions.REMOVE_FROM_CART) {
       (total, product) => total + product.price * product.quantity,
       0
     );
-  
+    const newCartQuantity = updatedCart.reduce(
+      (total, product) => total + product.quantity, // Sumamos las cantidades de cada producto
+      0
+    );
     return {
       ...state,
       cart: updatedCart,
+      cartQuantity: newCartQuantity,
       cartTotal: newCartTotal, // Usa el nuevo total calculado
     };
   }

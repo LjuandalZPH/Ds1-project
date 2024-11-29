@@ -31,16 +31,17 @@ const OrderSummary = () => {
       <div className="sub-container">
         <div className="contains-order">
           <div className="total-cost">
+          <h4>Total Items({store.state.cartQuantity})</h4><br />
             <h3>SUBTOTAL </h3>
             <h3>$&nbsp;
     {new Intl.NumberFormat("es-ES", {
       style: "decimal",
       useGrouping: true,
-    }).format(Math.floor(store.state.cartTotal))} {/* Corrección aplicada */}
+    }).format(Math.floor(store.state.cartTotal|| 0))} {/* Corrección aplicada */}
   </h3>
           </div>
           <div className="shipping">
-            <h4>Shipping</h4>
+            <h4>Shipping  ({store.state.cartQuantity})</h4>
             <select
               className="select-dropdown"
               onChange={(item) => {
