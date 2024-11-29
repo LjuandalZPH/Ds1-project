@@ -56,22 +56,50 @@ const reducer = (state, action) => {
   }
   // ADD TO CART
   if (action.type == actions.ADD_TO_CART) {
-    const product = state.products.find(
-      (product) => product.id == action.product
-    );
+    const product = state.products.find((product) => product.id == action.product);
     product.addedToCart = true;
-    product.quantity = 1;
-
-    // backup with local Forage here
-    localforage.setItem("cartItems", [...state.cart, product]);
-
+  
+    // Verificar si el producto ya está en el carrito
+    const updatedCart = state.cart.reduce((acc, item) => {
+      if (item.id === product.id) {
+        // Si el producto ya está en el carrito, solo actualizamos la cantidad
+        acc.push({ ...item, quantity: item.quantity + 1 });
+      } else {
+        // Si el producto no está en el carrito, lo agregamos tal cual
+        acc.push(item);
+      }
+      return acc;
+    }, []);
+  
+    // Si el producto no está en el carrito, lo agregamos con cantidad 1
+    if (!updatedCart.some((item) => item.id === product.id)) {
+      updatedCart.push({ ...product, quantity: 1 });
+    }
+  
+    // Backup con localForage aquí
+    localforage.setItem("cartItems", updatedCart);
+  
+    // Calculamos el total con `reduce`
+    const newCartTotal = updatedCart.reduce(
+      (total, product) => total + product.price * product.quantity,
+      0
+    );
+  
+    // Calculamos la cantidad total de artículos, sumando las cantidades de cada producto
+    const newCartQuantity = updatedCart.reduce(
+      (total, product) => total + product.quantity, // Sumamos las cantidades de cada producto
+      0
+    );
+  
     return {
       ...state,
-      cart: [...state.cart, product],
-      cartQuantity: state.cartQuantity + 1,
-      cartTotal: state.cartTotal + product.price,
+      cart: updatedCart,
+      cartQuantity: newCartQuantity, // Total de artículos, considerando la cantidad de cada producto
+      cartTotal: newCartTotal, // Total en dinero basado en las cantidades
     };
   }
+  
+  
 // Remove from cart
 if (action.type == actions.REMOVE_FROM_CART) {
   // Encuentra el producto por su id
@@ -103,29 +131,45 @@ if (action.type == actions.REMOVE_FROM_CART) {
     cartTotal: newCartTotal,
   };
 }
-
-
   // add quantity
-  if (action.type == actions.ADD_QUANTITY) {
-    const product = state.cart.find((product) => product.id == action.product);
-    product.quantity = product.quantity + 1;
-
+  if (action.type === actions.ADD_QUANTITY) {
+    // Mapeamos los productos del carrito para actualizar el producto objetivo
+    const updatedCart = state.cart.map((product) =>
+      product.id === action.product
+        ? { ...product, quantity: product.quantity + 1 } // Incrementamos la cantidad del producto
+        : product // Si no es el producto objetivo, lo dejamos igual
+    );
+  
+    // Calculamos el total actualizado usando `reduce`
+    const newCartTotal = updatedCart.reduce(
+      (total, product) => total + product.price * product.quantity,
+      0
+    );
+  
     return {
       ...state,
-      cartTotal: state.cartTotal + product.price,
+      cart: updatedCart, // Actualizamos el carrito con el carrito modificado
+      cartTotal: newCartTotal, // Usamos el nuevo total calculado
     };
   }
-
   // reduce quantity
-  if (action.type == actions.REDUCE_QUANTITY) {
-    const product = state.cart.find((product) => product.id == action.product);
-    if (product.quantity == 1) {
-      return state;
-    }
-    product.quantity = product.quantity - 1;
+  if (action.type === actions.REDUCE_QUANTITY) {
+    const updatedCart = state.cart.map((product) =>
+      product.id === action.product && product.quantity > 1
+        ? { ...product, quantity: product.quantity - 1 }
+        : product
+    );
+  
+    // Calcula el total actualizado basado en el carrito modificado
+    const newCartTotal = updatedCart.reduce(
+      (total, product) => total + product.price * product.quantity,
+      0
+    );
+  
     return {
       ...state,
-      cartTotal: state.cartTotal - product.price,
+      cart: updatedCart,
+      cartTotal: newCartTotal, // Usa el nuevo total calculado
     };
   }
 

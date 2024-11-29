@@ -15,9 +15,14 @@ const OrderDetails = ({ product }) => {
           <p>{product.description}</p>
         </div>
       </div>
-      <div className="order-price">
-        <h3>${product.price}</h3>
-      </div>
+      <div className="order-price"><h2>
+    $&nbsp;
+    {new Intl.NumberFormat("es-ES", {
+      style: "decimal",
+      useGrouping: true,
+    }).format(Math.floor(product?.price))}
+    </h2>
+  </div>
       <div className="quantity">
         <p>Quantity</p>
         <div className="increase-quantity">
