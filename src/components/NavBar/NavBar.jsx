@@ -38,12 +38,12 @@ const NavBar = ({ onSearch }) => {
                 <div className="search-bar">
                 <input
                         type="text"
-                        placeholder="Buscar en unizone.com"
+                        placeholder="Busca un producto en unizone.com"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         onKeyDown={handleKeyDown}  // Escucha la tecla 'Enter'
                     />
-                    <button className="search-button">🔍</button>
+                    <button className="search-button" onClick={handleSearch}>🔍</button>
                 </div>
                 <div className="nav-icons">
                     <Link to="/login">👤 Mi cuenta</Link>

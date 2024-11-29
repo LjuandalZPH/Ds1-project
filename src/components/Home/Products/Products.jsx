@@ -7,9 +7,13 @@ import Skeleton from "react-loading-skeleton";
 
 
 const Products = ({products}) => {
-  console.log("Productos recibidos:", products);
   let {store} = useGlobalContext();
-  let sortedProducts = products
+   // Usa los productos recibidos como parámetro o los del store por defecto
+   let availableProducts = products && products.length > 0 
+   ? products 
+   : store.state.products;
+
+  let sortedProducts = availableProducts
     .slice().sort((a, b) => a.name.localeCompare(b.name));
   return (
     <div className="sub-container" id="products">
