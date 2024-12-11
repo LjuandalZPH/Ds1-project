@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavBar from "@/components/NavBar/NavBar";
 import Search from "@/components/NavBar/NoResults/NoResults";
 import LoginView from './views/LoginView';
-import RegisterForm from "./components/NavBar/Register/RegisterForm";
+import RegisterView from "./views/RegisterView";
 import ShopFooter from "@/components/Footer/ShopFooter";
 import ErrorView from "./views/ErrorView";
 import CartView from "./views/CartView";
@@ -34,6 +34,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomeView searchTerm={searchTerm} />} />
           <Route path="/login" element={<LoginView />} />
+          <Route path="/register" element={<RegisterView/>}/>
           <Route path="/cart" element={<CartView />} />
           <Route path="/delivery" element={<DeliveryView />} />
           <Route path="*" element={<ErrorView />} />

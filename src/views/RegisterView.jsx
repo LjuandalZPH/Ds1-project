@@ -1,6 +1,6 @@
 import React from "react";
-import RegisterForm from "../components/NavBar/RegisterForm/RegisterForm"; // Importación correcta
-import "./RegisterView.css"; 
+import RegisterForm from "../components/NavBar/Register/RegisterForm"; // Importación correcta
+ 
 
 const RegisterView = () => {
   return (
