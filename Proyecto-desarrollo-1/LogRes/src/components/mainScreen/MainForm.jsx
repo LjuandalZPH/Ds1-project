@@ -25,7 +25,7 @@ const MainForm = () => {
                 </div>
                 <div className="nav-icons">
                     <Link to="/login">👤 Mi cuenta</Link>
-                    <Link to="/cart">🛒 Carrito</Link>
+                    <Link to="/cart1">🛒 Carrito</Link>
                 </div>
             </header>
 

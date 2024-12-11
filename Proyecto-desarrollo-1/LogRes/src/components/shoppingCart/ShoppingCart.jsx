@@ -1,8 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './ShoppingCart.css';
 
 const ShoppingCart = ({ cart, handleQuantityChange, handleRemoveFromCart }) => {
-  // Calcular el precio total del carrito
   const totalPrice = cart.reduce((total, product) => total + product.price * product.quantity, 0);
 
   return (
