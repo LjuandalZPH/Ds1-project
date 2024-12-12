@@ -23,3 +23,8 @@ Screens
 *.njsproj
 *.sln
 *.sw?
+
+
+# Virtual Environments
+venv/
+.venv/  
