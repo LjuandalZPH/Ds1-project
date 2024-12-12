@@ -1,23 +1,21 @@
 import { useReducer } from "react";
 import { toast } from "react-toastify";
-import {
-  setExpirationDate,
-  getUserFromLocalStorage,
-} from "../helpers/checkExpiration";
+import { setExpirationDate, getUserFromLocalStorage } from "../helpers/checkExpiration";
 
 const initialState = {
   user: getUserFromLocalStorage() || null,
 };
+
 const actions = Object.freeze({
   SET_USER: "SET_USER",
   LOGOUT: "LOGOUT",
 });
 
 const reducer = (state, action) => {
-  if (action.type == actions.SET_USER) {
+  if (action.type === actions.SET_USER) {
     return { ...state, user: action.user };
   }
-  if (action.type == actions.LOGOUT) {
+  if (action.type === actions.LOGOUT) {
     return { ...state, user: null };
   }
   return state;
@@ -28,35 +26,35 @@ const useAuth = () => {
 
   const register = async (userInfo) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        mode: "cors",
-        credentials: "include",
-        body: JSON.stringify(userInfo),
+      const response = await fetch("http://127.0.0.1:8000/api/register/", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userInfo),
       });
-
-      const user = await response.json();
-      if (user.error) {
-        toast.error(user.error);
+  
+      if (!response.ok) {
+          const errorData = await response.json();
+          if (errorData.username) {
+              toast.error(errorData.username[0]);
+          } else if (errorData.email) {
+              toast.error(errorData.email[0]);
+          } else {
+              toast.error("Ocurrió un error inesperado.");
+          }
+      } else {
+          toast.success("Usuario registrado exitosamente.");
       }
-      if (user.user) {
-        dispatch({ type: actions.SET_USER, user: user.user });
-        user.user.expirationDate = setExpirationDate(7);
-        localStorage.setItem("user", JSON.stringify(user.user));
-        toast.success("Registration successful");
-        // login user
-      }
-    } catch (error) {
-      toast.error("There was a problem registering, try again");
-    }
+  } catch (error) {
+      console.error("Error:", error);
+      toast.error("Hubo un problema al registrar el usuario.");
+  } 
   };
 
   const login = async (userInfo) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
+      const response = await fetch(`http://127.0.0.1:8000/api/login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -73,10 +71,13 @@ const useAuth = () => {
         dispatch({ type: actions.SET_USER, user: user.user });
         user.user.expirationDate = setExpirationDate(7);
         localStorage.setItem("user", JSON.stringify(user.user));
-        toast.success("Login successful");
+        toast.success("Login exitoso");
+      }
+      else{
+        toast.success("Login exitoso");
       }
     } catch (error) {
-      toast.error("There was a problem logging in, try again");
+      toast.error("Hubo un problema al iniciar sesión, intenta de nuevo");
     }
   };
 

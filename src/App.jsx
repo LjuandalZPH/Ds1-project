@@ -10,6 +10,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useGlobalContext } from "@/components/GlobalContext/GlobalContext";
+import PasswordResetRequest from "./components/NavBar/reset/PasswordResetRequest";
+import PasswordResetConfirm from "./components/NavBar/reset/PasswordResetConfirm";
 
 // Global components
 import Topbar from "./scenes/global/Topbar";
@@ -77,6 +79,8 @@ function App() {
                 <Route path="/" element={<HomeView searchTerm={searchTerm} />} />
                 <Route path="/login" element={<LoginView />} />
                 <Route path="/register" element={<RegisterView />} />
+                <Route path="/password_reset" element={<PasswordResetRequest />} />
+                <Route path="/reset/:uidb64/:token" component={PasswordResetConfirm} />
                 <Route path="/cart" element={<CartView />} />
                 <Route path="/delivery" element={<DeliveryView />} />
                 <Route path="*" element={<ErrorView />} />
