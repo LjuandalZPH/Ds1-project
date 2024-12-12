@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './NavBar.css';
 import { Link ,useNavigate} from 'react-router-dom';
-
+import useAuth from "@/store/auth";
 const NavBar = ({ onSearch }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+    const { state } = useAuth();
+    const username = state.user?.username;
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
@@ -51,7 +52,7 @@ const NavBar = ({ onSearch }) => {
                     <button className="search-button" onClick={handleSearch}>🔍</button>
                 </div>
                 <div className="nav-icons">
-                    <Link to="/login">👤 Mi cuenta</Link>
+                    <Link to="/login">{username ? `👤 ${username}` : "👤 Invitado"}</Link>
                     <Link to="/cart">🛒 Carrito</Link>
                 </div>
             </header>

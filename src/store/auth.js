@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { setExpirationDate, getUserFromLocalStorage } from "../helpers/checkExpiration";
 
 const initialState = {
-  user: getUserFromLocalStorage() || null,
+  user: getUserFromLocalStorage() || null ,
 };
 
 const actions = Object.freeze({
@@ -12,18 +12,19 @@ const actions = Object.freeze({
 });
 
 const reducer = (state, action) => {
-  if (action.type === actions.SET_USER) {
-    return { ...state, user: action.user };
+  switch (action.type) {
+    case actions.SET_USER:
+      return { ...state, user: action.user };
+    case actions.LOGOUT:
+      return { ...state, user: null };
+    default:
+      return state;
   }
-  if (action.type === actions.LOGOUT) {
-    return { ...state, user: null };
-  }
-  return state;
 };
+
 
 const useAuth = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-
   const register = async (userInfo) => {
     try {
       const response = await fetch("http://127.0.0.1:8000/api/register/", {
@@ -63,24 +64,33 @@ const useAuth = () => {
         credentials: "include",
         body: JSON.stringify(userInfo),
       });
-      const user = await response.json();
-      if (user.error) {
-        toast.error(user.error);
+  
+      // Verifica si la respuesta es válida
+      if (!response.ok) {
+        throw new Error("Error en la autenticación");
       }
-      if (user.user) {
-        dispatch({ type: actions.SET_USER, user: user.user });
-        user.user.expirationDate = setExpirationDate(7);
-        localStorage.setItem("user", JSON.stringify(user.user));
-        toast.success("Login exitoso");
-      }
-      else{
-        toast.success("Login exitoso");
+  
+      const data = await response.json();
+  
+      if (data.access && data.refresh) {
+        // Guarda los datos relevantes en el estado y localStorage
+        const user = {
+          username: data.username,
+          role: data.role,
+          expirationDate: setExpirationDate(7),
+        };
+  
+        dispatch({ type: actions.SET_USER, user });
+        localStorage.setItem("user", JSON.stringify(user));
+        toast.success("Inicio de sesión exitoso");
+      } else {
+        toast.error("Hubo un problema al iniciar sesión, intenta de nuevo");
       }
     } catch (error) {
-      toast.error("Hubo un problema al iniciar sesión, intenta de nuevo");
+      toast.error(error.message || "Hubo un problema al iniciar sesión, intenta de nuevo");
     }
   };
-
+  
   const logout = async () => {
     await fetch(`${import.meta.env.VITE_API_URL}/logout`, {
       method: "GET",

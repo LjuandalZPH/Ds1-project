@@ -1,36 +1,42 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
-
 const PasswordResetRequest = () => {
     const [email, setEmail] = useState("");
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        await requestPasswordReset(email); // Llamar a la función al enviar el formulario
+    };
+
+    const requestPasswordReset = async (email) => {
         try {
-            const csrftoken = document.cookie
-                .split('; ')
-                .find((row) => row.startsWith('csrftoken'))
-                ?.split('=')[1]; // Obtener el token CSRF de la cookie
-    
-            const response = await fetch('http://127.0.0.1:8000/password_reset/', {
-                method: 'POST',
+            const requestData = {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken, // Agregar el token CSRF al header
+                    "Content-Type": "application/json",
+                     // Agregar el token CSRF si es necesario
                 },
-                credentials: 'include', // Incluir las cookies en la solicitud
                 body: JSON.stringify({ email }),
-            });
-    
-            const data = await response.json();
-            if (response.ok) {
-                toast.success("Se ha enviado un enlace para restablecer tu contraseña.");
+            };
+
+            // Agregar console.log para depuración
+            console.log("Datos enviados al servidor:", requestData);
+
+            const response = await fetch("http://127.0.0.1:8000/api/password-reset/", requestData);
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error("Error del servidor:", errorData);
+                toast.error(errorData.detail || "Ocurrió un error inesperado.");
             } else {
-                toast.error(data.error || "Hubo un error.");
+                toast.success(
+                    "Se ha enviado un enlace para restablecer la contraseña a tu correo electrónico."
+                );
             }
         } catch (error) {
-            toast.error("Hubo un error al intentar enviar el correo.");
+            console.error("Error de la solicitud:", error);
+            toast.error("Hubo un problema al solicitar el restablecimiento de la contraseña.");
         }
     };
 

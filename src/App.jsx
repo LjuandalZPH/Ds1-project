@@ -12,6 +12,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useGlobalContext } from "@/components/GlobalContext/GlobalContext";
 import PasswordResetRequest from "./components/NavBar/reset/PasswordResetRequest";
 import PasswordResetConfirm from "./components/NavBar/reset/PasswordResetConfirm";
+import useAuth from "@/store/auth";
 
 // Global components
 import Topbar from "./scenes/global/Topbar";
@@ -41,7 +42,9 @@ function App() {
   const [isSidebar, setIsSidebar] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const { store, modal } = useGlobalContext();
-  const userIsAdmin = store.state.user?.role === "admin";
+  const { state } = useAuth(); 
+  const userRole = state.user?.role;
+  
 
   useEffect(() => {
     if (store.state.products.length > 0) return;
@@ -62,18 +65,21 @@ function App() {
                 <NavBar onSearch={(term) => setSearchTerm(term)} />
               </header>
               <Routes>
-                {/* Routes for the first app */}
-                {userIsAdmin && <Route path="/adm" element={<Dashboard />} />}  {/* Mostrar solo si es admin */}
-                <Route path="/team" element={<Team />} />
-                <Route path="/contacts" element={<Contacts />} />
-                <Route path="/invoices" element={<Invoices />} />
-                <Route path="/form" element={<Form />} />
-                <Route path="/bar" element={<Bar />} />
-                <Route path="/pie" element={<Pie />} />
-                <Route path="/line" element={<Line />} />
-                <Route path="/faq" element={<FAQ />} />
-                <Route path="/calendar" element={<Calendar />} />
-                <Route path="/geography" element={<Geography />} />
+              {userRole === "admin" && (
+                  <>
+                    <Route path="/adm" element={<Dashboard />} />
+                    <Route path="/team" element={<Team />} />
+                    <Route path="/contacts" element={<Contacts />} />
+                    <Route path="/invoices" element={<Invoices />} />
+                    <Route path="/form" element={<Form />} />
+                    <Route path="/bar" element={<Bar />} />
+                    <Route path="/pie" element={<Pie />} />
+                    <Route path="/line" element={<Line />} />
+                    <Route path="/faq" element={<FAQ />} />
+                    <Route path="/calendar" element={<Calendar />} />
+                    <Route path="/geography" element={<Geography />} />
+                  </>
+                )}
 
                 {/* Routes for the second app */}
                 <Route path="/" element={<HomeView searchTerm={searchTerm} />} />

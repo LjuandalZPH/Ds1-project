@@ -39,12 +39,14 @@ const SidebarItem = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const Sidebar = () => {
+const Sidebar = ({ userRole }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
-
+  if (userRole !== "admin") {
+    return null; // No mostrar el Sidebar si el usuario no es admin
+  }
   return (
     <Box sx={{ display: "flex" }}>
       <Drawer
