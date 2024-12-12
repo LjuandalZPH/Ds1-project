@@ -14,6 +14,7 @@
 
 .order-container::-webkit-scrollbar-thumb {
   background-color: #bdbdbd;
+  color:black;
   border-radius: 10px;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;

@@ -60,7 +60,7 @@ function App() {
             {/* Topbar and Sidebar */}
             <Sidebar isSidebar={isSidebar} />
             <main className="content">
-              <Topbar setIsSidebar={setIsSidebar} />
+             
               <header>
                 <NavBar onSearch={(term) => setSearchTerm(term)} />
               </header>

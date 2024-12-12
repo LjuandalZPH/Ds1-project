@@ -10,10 +10,12 @@
 
 .benefit-title {
   font-size: medium;
+  color: black;
 }
 
 .benefit-body {
   font-size: small;
+  color: black;
 }
 
 .benefit-icon {
