@@ -168,5 +168,19 @@ body {
   .menu-list li a {
     font-size: 16px;
   }
+  
+  .logout-button {
+    background: none;
+    border: none;
+    color: #f00;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-left: 1rem;
+  }
+
+  .logout-button:hover {
+    text-decoration: underline;
+  }
+
 }
 

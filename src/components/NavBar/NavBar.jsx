@@ -1,63 +1,79 @@
 import React, { useState, useEffect } from 'react';
 import './NavBar.css';
-import { Link ,useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useAuth from "@/store/auth";
+
 const NavBar = ({ onSearch }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { state } = useAuth();
+    const { state, logout } = useAuth(); // logout viene del store de auth
+    const navigate = useNavigate();
+
     const username = state.user?.username;
+
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+
     const [searchTerm, setSearchTerm] = useState("");
     const handleSearch = () => {
         if (!searchTerm.trim()) {
-            // Si el término está vacío, realiza alguna acción (opcional)
-            onSearch(""); // Envía una cadena vacía para indicar que no hay búsqueda
+            onSearch(""); // Envía una cadena vacía si no hay búsqueda
             return;
         }
-        onSearch(searchTerm); // Llama a la función proporcionada desde HomeView
+        onSearch(searchTerm);
         scrollToProducts();
     };
+
     const scrollToProducts = () => {
         const productsSection = document.querySelector("#products");
         if (productsSection) {
             productsSection.scrollIntoView({ behavior: "smooth" });
         }
     };
-    // Función para manejar el evento de presionar 'Enter'
+
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             handleSearch();
         }
     };
+
+    const handleLogout = () => {
+        logout(); // Limpia el estado de autenticación
+        navigate('/login'); // Redirige al login
+    };
+
     useEffect(() => {
         document.title = "Unizone";
     }, []);
 
     return (
         <>
-            {/* Encabezado principal */}
             <header className="main-nav">
                 <Link className="brand" to="/">UNIZONE</Link>
                 <button className="menu-button" onClick={toggleMenu}>Menú</button>
                 <div className="search-bar">
-                <input
+                    <input
                         type="text"
                         placeholder="Busca un producto en unizone.com"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        onKeyDown={handleKeyDown}  // Escucha la tecla 'Enter'
+                        onKeyDown={handleKeyDown}
                     />
                     <button className="search-button" onClick={handleSearch}>🔍</button>
                 </div>
                 <div className="nav-icons">
-                    <Link to="/login">{username ? `👤 ${username}` : "👤 Invitado"}</Link>
+                    {username ? (
+                        <>
+                            <span>👤 {username}</span>
+                            <button onClick={handleLogout} className="logout-button">Cerrar sesión</button>
+                        </>
+                    ) : (
+                        <Link to="/login">👤 Iniciar sesión</Link>
+                    )}
                     <Link to="/cart">🛒 Carrito</Link>
                 </div>
             </header>
 
-            {/* Menú desplegable */}
             {isMenuOpen && (
                 <div className="dropdown-menu">
                     <ul className="menu-list">
